@@ -1,0 +1,51 @@
+[Project ID]
+Signature=UE Proj: v.1
+[Project Information]
+CTags Legacy Support=0
+Compilable=0
+Create Tagfile=0
+Filter=
+Include Sub Directories=1
+Project Directory=E:\hge\Resource\Script_Lua
+Project Start=DA07060005000400100027000E00000035
+Project Tagfile=
+Project Wordfile=
+Relative to Project File=1
+Save Account=0
+Use Relative Directory=1
+Using VCS=0
+Working Time=1594034
+[Folders]
+HDSS=1
+HDSS - Control=1
+HDSS - Edef=1
+HDSS - Event=1
+HDSS - Scene=1
+.\=1
+.\ - ÎÄµµ=1
+.\ - HDSS=1
+.\ - HDSS - Control=1
+[uemakeXp]
+ReleaseMode=0
+[Debug Settings]
+Program Arguments=
+Selected Debugger=0
+Source Paths=
+Symbol Paths=
+Working Directory=
+[Open Files]
+Active File Display Mode=3
+Active File Index=1
+Open File Line0=440
+Open File Line1=4136
+Open File Pos0=561
+Open File Pos1=4311
+Open File Window Pos0=0,1,-1,-1,-4,-30,22,29,1546,614
+Open File Window Pos1=2,3,-1,-1,-4,-30,88,116,1660,557
+Open File0=E:\hge\Resource\Script_Lua\HDSS\Control\cSceneSelect.lua
+Open File1=E:\hge\Resource\Script_Lua\HDSS\Helper_HDSS.lua
+Open File2=
+[Group Filter]
+.\=*.lua
+[Files]
+0=.\

@@ -256,7 +256,7 @@ int Process::processInit()
 
 	SpriteItemManager::Init();
 
-	Fontsys::Init();
+	Fontsys::Init(FrontDisplay::fdisp.info.normalfont);
 	if(!Effectsys::Init(BResource::bres.tex, BResource::bres.resdata.effectsysfoldername, BResource::bres.resdata.effectsysfilename))
 	{
 #ifdef __DEBUG

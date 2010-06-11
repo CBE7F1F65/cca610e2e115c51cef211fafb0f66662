@@ -336,6 +336,7 @@ BYTE * CALL HGE_Impl::Resource_Load(const char *filename, DWORD *size)
 			for(i=0; szZipName[i]; i++)	{ if(szZipName[i]=='/') szZipName[i]='\\'; }
 			if(!strcmp(szName,szZipName))
 			{
+				System_Log("%d %d", Resource_GetPSW(resItem->password), resItem->password);
 				if(unzOpenCurrentFilePassword(zip, Resource_GetPSW(resItem->password)/* ? resItem->password : 0*/) != UNZ_OK)
 				{
 					unzClose(zip);

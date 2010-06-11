@@ -46,6 +46,9 @@ public:
 
 	static void ShowError(int errortype, const char * err);
 
+	static void HeatUp(list<int> * charcodelist, LuaState * ls=NULL);
+	static void HeatUp(list<int> * charcodelist, LuaState * ls, LuaObject * obj);
+
 	//lua
 
 	static bool LuaRegistFunction();

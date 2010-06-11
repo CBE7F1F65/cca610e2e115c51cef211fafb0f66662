@@ -241,7 +241,10 @@ void Effectsys::action(bool byself)
 	if (chasetimer)
 	{
 		chasetimer--;
-		chaseAim(Target::tar[tarAim].x, Target::tar[tarAim].y, chasetimer);
+		if (tarAim < TARGETMAX)
+		{
+			chaseAim(Target::tar[tarAim].x, Target::tar[tarAim].y, chasetimer);
+		}
 	}
 
 	if (speed)

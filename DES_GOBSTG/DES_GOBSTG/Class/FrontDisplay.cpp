@@ -130,7 +130,7 @@ void FrontDisplay::SignUpSpell()
 	{
 		for (int i=0; i<3; i++)
 		{
-			gameinfodisplay.fsSpell[j][i].SignUp(BResource::bres.playerdata[Player::p[j].nowID].spellname[i], info.smallfont);
+			gameinfodisplay.fsSpell[j][i].SignUp(BResource::bres.playerdata[Player::p[j].nowID].spellname[i]);
 		}
 	}
 }
@@ -157,7 +157,7 @@ void FrontDisplay::OnShootCharge(BYTE playerindex, BYTE nowshootingcharge)
 void FrontDisplay::OnChangeMusic(int musicID)
 {
 	SetState(FDISP_MUSICNAME, FDISPSTATE_ON);
-	gameinfodisplay.fsMusic.SignUp(BResource::bres.musdata[musicID].musicname, info.tinyfont);
+	gameinfodisplay.fsMusic.SignUp(BResource::bres.musdata[musicID].musicname, 0.75f);
 }
 
 void FrontDisplay::action()
@@ -452,8 +452,8 @@ void FrontDisplay::RenderPanel()
 				alpha = INTER(0xff, 0, (musicstate-120)/60.0f);
 			}
 			DWORD col = (alpha<<24)|0xffff00;
-			gameinfodisplay.fsMusic.SetColor(col, col, col, col);
-			gameinfodisplay.fsMusic.Render(x, y);
+			gameinfodisplay.fsMusic.SetColor(col);
+			gameinfodisplay.fsMusic.Render(x, y, 0, HGETEXT_CENTER|HGETEXT_TOP);
 		}
 	}
 	if(info.asciifont)
@@ -524,7 +524,7 @@ void FrontDisplay::RenderSpellName(BYTE playerindex)
 		DWORD ucol = (alpha<<24)|0xFF0000;
 		DWORD dcol = (alpha<<24)|0xFFFFFF;
 		gameinfodisplay.fsSpell[1-playerindex][spellclass-1].SetColor(ucol, ucol, dcol, dcol);
-		gameinfodisplay.fsSpell[1-playerindex][spellclass-1].Render(x-100, y, FONTSYS_DEFAULT_SHADOW, 0.85f, 0, HGETEXT_MIDDLE|HGETEXT_LEFT);
+		gameinfodisplay.fsSpell[1-playerindex][spellclass-1].Render(x-100, y, FONTSYS_DEFAULT_SHADOW);
 	}
 }
 
@@ -561,9 +561,7 @@ bool FrontDisplay::Init()
 {
 	Release();
 
-	info.normalfont = hge->Font_Load(BResource::bres.resdata.widefontname, 20);
-	info.smallfont = hge->Font_Load(BResource::bres.resdata.widefontname, 16);
-	info.tinyfont = hge->Font_Load(BResource::bres.resdata.widefontname, 10);
+	info.normalfont = hge->Font_Load(BResource::bres.resdata.widefontname, 16);
 
 	int idx = 0;
 
@@ -673,10 +671,10 @@ bool FrontDisplay::Init()
 	{
 		for (int i=0; i<3; i++)
 		{
-			gameinfodisplay.fsSpell[j][i].SignUp("", info.smallfont);
+			gameinfodisplay.fsSpell[j][i].SignUp("");
 		}
 	}
-	gameinfodisplay.fsMusic.SignUp("", info.normalfont);
+	gameinfodisplay.fsMusic.SignUp("");
 
 	//ascii
 
@@ -765,16 +763,6 @@ void FrontDisplay::Release()
 		hge->Font_Free(info.normalfont);
 		info.normalfont = NULL;
 	}
-	if (info.smallfont)
-	{
-		hge->Font_Free(info.smallfont);
-		info.smallfont = NULL;
-	}
-	if (info.tinyfont)
-	{
-		hge->Font_Free(info.tinyfont);
-		info.tinyfont = NULL;
-	}
 	SpriteItemManager::FreeSprite(&info.cutin);
 	SpriteItemManager::FreeSprite(&info.plchat_1);
 	SpriteItemManager::FreeSprite(&info.plchat_2);
@@ -819,13 +807,4 @@ void FrontDisplay::Release()
 	{
 		SpriteItemManager::FreeSprite(&ascii.ascii[i]);
 	}
-
-	for (int j=0; j<M_PL_MATCHMAXPLAYER; j++)
-	{
-		for (int i=0; i<3; i++)
-		{
-			gameinfodisplay.fsSpell[j][i].SignOff();
-		}
-	}
-	gameinfodisplay.fsMusic.SignOff();
 }

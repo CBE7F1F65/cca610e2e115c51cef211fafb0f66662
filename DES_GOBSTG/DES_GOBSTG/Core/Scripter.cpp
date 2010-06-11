@@ -565,7 +565,7 @@ addblock:
 						if(!binmode && file)
 						{
 							char tbuff[M_STRITOAMAX];
-							ltoa(ftell(file), tbuff, 16);
+							sprintf(tbuff, "%x", ftell(file));
 							HGELOG("Point to 0x%s.", tbuff);
 						}
 #endif

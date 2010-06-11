@@ -4,7 +4,7 @@ BUILD_PRX = 1
 PSP_FW_VERSION=371  
 INCDIR = ../../include
 LIBDIR = ../../lib
-CFLAGS = -G0 -w -O2 -D__PSP
+CFLAGS = -G0 -w -O2 -D__PSP -D__DEBUG
 CXXFLAGS = $(CFLAGS) -fno-rtti
 ASFLAGS = $(CFLAGS)
 LDFLAGS =
@@ -17,4 +17,8 @@ PSP_EBOOT_ICON = icon.png
 PSPSDK=$(shell psp-config --pspsdk-path)
 PSPBIN = $(PSPSDK)/../bin
 include $(PSPSDK)/lib/build.mak
+
+link:
+	rm -rf Class/Beam.o
+	make
 

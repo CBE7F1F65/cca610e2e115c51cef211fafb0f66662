@@ -64,6 +64,7 @@ bool BossInfo::isSpell()
 
 void BossInfo::bossUp()
 {
+/*
 //	Fill(mp.scene);
 
 	failed	= false;
@@ -81,7 +82,8 @@ void BossInfo::bossUp()
 //		meet = DataConnector::nMeet() - 1;
 //		if(meet < 0)
 //			meet = 0;
-	}
+	}*/
+
 }
 
 void BossInfo::Release()

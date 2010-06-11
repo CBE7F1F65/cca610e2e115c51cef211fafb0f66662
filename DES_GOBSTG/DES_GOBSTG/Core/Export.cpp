@@ -79,6 +79,35 @@ bool Export::clientAfterInitial()
 	matView2DMode = hge->Gfx_GetTransform(D3DTS_VIEW);
 	matProj2DMode = hge->Gfx_GetTransform(D3DTS_PROJECTION);
 
+#ifdef __PSP
+	float scaleval = SCREEN_HEIGHT / M_CLIENT_HEIGHT;
+	float offsetval = (SCREEN_WIDTH - M_CLIENT_WIDTH*scaleval)/2.0f;
+
+	matView2DMode._11 = scaleval;
+	matView2DMode._22 = scaleval;
+	matView2DMode._33 = scaleval;
+	matView2DMode._41 = offsetval;
+#endif // __PSP
+
+/*
+	HGELOG("View2DMode");
+	for (int i=0; i<4; i++)
+	{
+		for (int j=0; j<4; j++)
+		{
+			HGELOG("%f", matView2DMode.m[i][j]);
+		}
+	}
+	HGELOG("Proj2DMode");
+	for (int i=0; i<4; i++)
+	{
+		for (int j=0; j<4; j++)
+		{
+			HGELOG("%f", matProj2DMode.m[i][j]);
+		}
+	}
+*/
+
 	for (int i=0; i<M_PL_MATCHMAXPLAYER; i++)
 	{
 #ifdef __WIN32
@@ -99,9 +128,6 @@ bool Export::clientAfterInitial()
 #ifdef __PSP
 		D3DXMATRIX _matView;
 		D3DXMATRIX _matProj;
-
-		float scaleval = SCREEN_HEIGHT / M_CLIENT_HEIGHT;
-		float offsetval = (SCREEN_WIDTH - M_CLIENT_WIDTH*scaleval)/2.0f;
 
 		_matView.m[0][0] = scaleval;
 		_matView.m[0][1] = 0.0f;
@@ -164,6 +190,7 @@ void Export::clientSetMatrixUser(D3DXMATRIX matWorld, D3DXMATRIX matView, D3DXMA
 void Export::clientSetMatrix(float _worldx, float _worldy, float _worldz, BYTE renderflag)
 {
 	D3DXMATRIX matWorld;
+	hge->Math_MatrixIdentity(&matWorld);
 	hge->Math_MatrixTranslation(&matWorld, _worldx, _worldy, _worldz);
 	hge->Gfx_SetTransform( D3DTS_WORLD, &matWorld );
 

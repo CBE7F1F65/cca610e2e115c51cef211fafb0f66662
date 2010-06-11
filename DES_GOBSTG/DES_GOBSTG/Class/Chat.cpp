@@ -81,8 +81,8 @@ void Chat::Render()
 	{
 		SpriteItemManager::RenderSpriteEx(textbox, x[CHATTER_TEXTBOX], y[CHATTER_TEXTBOX], ARC(9000), 80.0f/(textbox->GetWidth()), 352.0f/(textbox->GetHeight()));
 	}
-	fschat.SetColor(0xFFFFFFFF, 0xFFFFFFFF, col, col);
-	fschat.Render(M_CLIENT_CENTER_X-160, M_CLIENT_CENTER_Y+148, FONTSYS_DEFAULT_SHADOW, 1, 0, HGETEXT_LEFT|HGETEXT_TOP);
+	fschat.SetColor(0xffffffff, 0xffffffff, col, col);
+	fschat.Render(M_CLIENT_CENTER_X-160, M_CLIENT_CENTER_Y+148, FONTSYS_DEFAULT_SHADOW);
 }
 
 bool Chat::chat(BYTE ID, BYTE chatsprite, const char * _text)
@@ -150,7 +150,7 @@ bool Chat::chat(BYTE ID, BYTE chatsprite, const char * _text)
 			}
 			text[i+line] = _text[i];
 		}
-		fschat.SignUp(text, FrontDisplay::fdisp.info.smallfont);
+		fschat.SignUp(text, 1.25f);
 		if(chatsprite & CHATSPRITE_LEFT)
 		{
 			col = 0xff6699ff;
@@ -196,7 +196,7 @@ bool Chat::chatOn(BYTE leftID, BYTE rightID, BYTE chatsprite)
 		pushtimer = 0xff;
 
 		strcpy(text, "");
-		fschat.SignUp(text);
+		fschat.SignUp(text, 1.25f);
 		
 		for (int i=0; i<M_PL_MATCHMAXPLAYER; i++)
 		{
@@ -280,13 +280,6 @@ bool Chat::chatOn(BYTE leftID, BYTE rightID, BYTE chatsprite)
 bool Chat::chatOff()
 {
 	timer++;
-
-	if(timer == 1)
-	{
-//		strcpy(text, "");
-//		fschat.SignUp(text);
-		fschat.SignOff();
-	}
 
 	if(timer <= 32)
 	{

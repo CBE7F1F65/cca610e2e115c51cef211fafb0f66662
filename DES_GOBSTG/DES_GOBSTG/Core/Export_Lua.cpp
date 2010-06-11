@@ -303,4 +303,41 @@ void Export_Lua::ShowError(int errortype, const char * err)
 	hge->System_Log("%s: %s", msgtitle, err);
 }
 
+#include "../Header/Fontsys.h"
+
+void Export_Lua::HeatUp(list<int> * charcodelist, LuaState * ls)
+{
+	HeatUp(charcodelist, ls, NULL);
+}
+
+void Export_Lua::HeatUp( list<int> * charcodelist, LuaState * ls, LuaObject * obj )
+{
+	if (!ls)
+	{
+		ls = state;
+	}
+	LuaObject _obj;
+	if (!obj)
+	{
+		_obj = ls->GetGlobals().GetByName(DEFAULT_LUASTRINGTABLENAME);
+		if (!_obj.IsTable())
+		{
+			return;
+		}
+		obj = &_obj;
+	}
+	int num = obj->GetTableCount();
+	for (int i=0; i<num; i++)
+	{
+		LuaObject tobj = obj->GetByIndex(i+1);
+		if (tobj.IsTable())
+		{
+			HeatUp(charcodelist, ls, &tobj);
+		}
+		else if (tobj.IsString())
+		{
+			Fontsys::DoHeatUpBuffer(tobj.GetString(), charcodelist);
+		}
+	}
+}
 #endif

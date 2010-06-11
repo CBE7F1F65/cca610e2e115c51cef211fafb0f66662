@@ -111,21 +111,48 @@ void Process::_RenderTar()
 
 int Process::render()
 {
+#ifdef __PSP
+	hge->Gfx_BeginScene();
+	hge->Gfx_Clear(0x00000000);
+#endif
+
 	bool isingame = IsInGame();
 	if (isingame)
 	{
+#ifdef __WIN32
 		hge->Gfx_BeginScene(rendertar[0]);
 		hge->Gfx_Clear(0x00000000);
+#else
+#ifdef __PSP
+		hge->Gfx_SetClipping(M_SIDE_EDGE, 0, SCREEN_WIDTH/2-M_SIDE_EDGE, SCREEN_HEIGHT);
+#endif // __PSP
+#endif // __WIN32
 		_Render(M_RENDER_LEFT);
+#ifdef __WIN32
 		hge->Gfx_EndScene();
+#endif // __WIN32
+#ifdef __WIN32
 		hge->Gfx_BeginScene(rendertar[1]);
 		hge->Gfx_Clear(0x00000000);
+#else
+#ifdef __PSP
+		hge->Gfx_SetClipping(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2-M_SIDE_EDGE, SCREEN_HEIGHT);
+#endif // __PSP
+#endif // __WIN32
 		_Render(M_RENDER_RIGHT);
+#ifdef __WIN32
 		hge->Gfx_EndScene();
+#endif // __WIN32
 	}
 
+#ifdef __WIN32
 	hge->Gfx_BeginScene();
 	hge->Gfx_Clear(0x00000000);
+#else
+#ifdef __PSP
+	hge->Gfx_SetClipping(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+#endif // __PSP
+#endif // __WIN32
 	Export::clientSetMatrix();
 	if (state == STATE_INIT)
 	{

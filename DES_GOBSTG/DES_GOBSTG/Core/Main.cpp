@@ -49,7 +49,7 @@ bool FrameFunc()
 
 bool GfxRestoreFunc()
 {
-	return Fontsys::GfxRestore();
+	return true;
 }
 
 bool ExitFunc()

@@ -14,7 +14,7 @@ Relative to Project File=1
 Save Account=0
 Use Relative Directory=1
 Using VCS=0
-Working Time=1594034
+Working Time=1617046
 [Folders]
 HDSS=1
 HDSS - Control=1
@@ -35,16 +35,12 @@ Symbol Paths=
 Working Directory=
 [Open Files]
 Active File Display Mode=3
-Active File Index=1
-Open File Line0=440
-Open File Line1=4136
-Open File Pos0=561
-Open File Pos1=4311
-Open File Window Pos0=0,1,-1,-1,-4,-30,22,29,1546,614
-Open File Window Pos1=2,3,-1,-1,-4,-30,88,116,1660,557
-Open File0=E:\hge\Resource\Script_Lua\HDSS\Control\cSceneSelect.lua
-Open File1=E:\hge\Resource\Script_Lua\HDSS\Helper_HDSS.lua
-Open File2=
+Active File Index=0
+Open File Line0=915
+Open File Pos0=911
+Open File Window Pos0=2,3,-1,-1,-4,-30,110,145,1682,582
+Open File0=E:\hge\Resource\TH_CONFIG.ini
+Open File1=
 [Group Filter]
 .\=*.lua
 [Files]

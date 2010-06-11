@@ -55,7 +55,6 @@ void SelectSystem::Clear()
 	for(list<Selector>::iterator it=sel.begin();it!=sel.end();it++)
 	{
 		SpriteItemManager::FreeSprite(&(it->sprite));
-		it->fsinfo.SignOff();
 	}
 	SpriteItemManager::FreeSprite(&spselectframe);
 	sel.clear();

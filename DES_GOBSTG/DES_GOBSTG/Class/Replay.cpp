@@ -10,7 +10,7 @@
 list<_ReplayNameListItem> Replay::_rpyfilenamelist;
 
 Replay Replay::rpy;
-Replay Replay::enumrpy[RPYENUMMAX];
+Replay * Replay::enumrpy = NULL;
 int Replay::nenumrpy = 0;
 
 Replay::Replay()
@@ -49,6 +49,8 @@ int Replay::GetEnumReplay()
 {
 	ReleaseEnumReplay();
 
+	enumrpy = new Replay[RPYENUMMAX];
+
 	hge->Resource_SetCurrentDirectory(hge->Resource_MakePath(BResource::bres.resdata.replayfoldername));
 	char * buffer;
 	char enumfile[M_STRMAX];
@@ -75,13 +77,17 @@ int Replay::GetEnumReplay()
 
 void Replay::ReleaseEnumReplay()
 {
-	for (int i=0; i<RPYENUMMAX; i++)
+	if (enumrpy)
 	{
-		if (strlen(enumrpy[i].filename))
+		for (int i=0; i<RPYENUMMAX; i++)
 		{
-			Export::rpyFree(enumrpy[i].filename);
-			strcpy(enumrpy[i].filename, "");
+			if (strlen(enumrpy[i].filename))
+			{
+				Export::rpyFree(enumrpy[i].filename);
+				strcpy(enumrpy[i].filename, "");
+			}
 		}
+		delete[] enumrpy;
 	}
 	nenumrpy = 0;
 }

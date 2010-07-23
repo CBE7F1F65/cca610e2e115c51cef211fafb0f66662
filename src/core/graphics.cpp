@@ -371,6 +371,52 @@ DWORD _ARGBtoABGR(DWORD color)
 }
 #endif // __PSP
 
+void CALL HGE_Impl::Gfx_RenderPoint(float x, float y, float z, DWORD color)
+{
+#ifdef __WIN32
+	if(VertArray)
+	{
+		if(CurPrimType!=HGEPRIM_POINTS || nPrim>=VERTEX_BUFFER_SIZE/HGEPRIM_POINTS || CurTexture || CurBlendMode!=BLEND_DEFAULT)
+		{
+			_render_batch();
+
+			CurPrimType=HGEPRIM_POINTS;
+			if(CurBlendMode != BLEND_DEFAULT) _SetBlendMode(BLEND_DEFAULT);
+			if(CurTexture) { pD3DDevice->SetTexture(0, 0); CurTexture=0; }
+		}
+
+		int i=nPrim*HGEPRIM_POINTS;
+		VertArray[i].x = x;
+		VertArray[i].y = y;
+		VertArray[i].z = z;
+		VertArray[i].col = color;
+		VertArray[i].tx = VertArray[i].ty = 0.0f;
+
+		nPrim++;
+	}
+#else
+
+#ifdef __PSP
+	struct pspVertex* vertices = (struct pspVertex*)sceGuGetMemory(1 * sizeof(struct pspVertex));
+	if (!vertices)
+	{
+		return;
+	}
+	vertices[0].color = color;
+	vertices[0].x = x; 
+	vertices[0].y = y; 
+
+	sceGuDisable(GU_TEXTURE_2D);
+	sceGuShadeModel(GU_FLAT);
+	sceGuShadeModel(GU_SMOOTH);
+	sceGuAmbientColor(0xffffffff);
+	sceGumDrawArray(GU_POINTS, GU_COLOR_8888|GU_VERTEX_32BITF|GU_TRANSFORM_3D, 1*1, 0, vertices);
+	sceGuEnable(GU_TEXTURE_2D);
+#endif // __PSP
+
+#endif // __WIN32
+}
+
 void CALL HGE_Impl::Gfx_RenderLine(float x1, float y1, float x2, float y2, DWORD color, float z)
 {
 #ifdef __WIN32
@@ -1029,6 +1075,10 @@ void HGE_Impl::_render_batch(bool bEndScene)
 
 				case HGEPRIM_LINES:
 					pD3DDevice->DrawPrimitive(D3DPT_LINELIST, 0, nPrim);
+					break;
+
+				case HGEPRIM_POINTS:
+					pD3DDevice->DrawPrimitive(D3DPT_POINTLIST, 0, nPrim);
 					break;
 			}
 	
